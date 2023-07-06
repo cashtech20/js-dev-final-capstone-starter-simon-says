@@ -154,7 +154,7 @@ function setLevel(level = 1) {
     maxRoundCount = 31;
   } else {
     //throw new Error("Please enter level 1, 2, 3, or 4")
-    document.getElementById("js-heading").innerHTML = err;
+    document.getElementsByClassName(".js-heading").innerHTML = err;
   }
 }
 
@@ -184,7 +184,7 @@ function getRandomItem(collection) {
  */
 function setText(element, text) {
   // TODO: Write your code here.
-  document.textContent = text;
+  element.textContent = text;
   return element;
 }
 
@@ -259,7 +259,12 @@ function activatePads(sequence) {
  */
  function playComputerTurn() {
   // TODO: Write your code here.
-
+  padContainer.classList.add("unclickable");
+  setText(statusSpan, "The computer's turn...");
+  //statusSpan.classList.remove("hidden");
+  setText(heading, `Round ${roundCount} of ${maxRoundCount}`);
+  computerSequence.push(getRandomItem(pads).color);
+  activatePads(computerSequence);
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
 }
 
