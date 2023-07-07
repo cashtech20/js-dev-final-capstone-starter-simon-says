@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Microbe&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap'); */
 
 html {
   background: url('../assets/background.png') no-repeat center center fixed;
@@ -11,8 +12,9 @@ html {
 }
 
 body {
-  color: yellow;
+  color: lime;
   font-family: 'Rubik Microbe', sans-serif;
+  /* font-family: 'Metal Mania', sans-serif; */
   display: flex;
   justify-content: center;
   height: 100vh;
@@ -22,6 +24,8 @@ body {
 main {
   background-color: #000;
   padding: 40px;
+  border-radius: 15%;
+  border: 3px solid purple;
 }
 
 h1 {
@@ -37,21 +41,24 @@ h1 {
   display: inline-block;
   height: 38px;
   padding: 0 30px;
-  color: yellow;
+  color: lime;
   text-align: center;
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
   background-color: transparent;
-  border: 1px solid yellow;
+  border: 2px solid purple;
   cursor: pointer;
 }
 
 .start-button:hover {
-  color: greenyellow;
+  color: lime;
   font-size: 18px;
-  border-color: greenyellow;
-  transform: rotate(5deg);
+  border: 4px dashed purple;
+  /* border-color: purple; */
+  /* transform: rotate(5deg); */
+  animation: shake 0.5s;
+  animation-iteration-count: infinite; 
 }
 
 .status {
@@ -140,4 +147,18 @@ h1 {
 
 .unclickable {
   pointer-events: none;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
 }

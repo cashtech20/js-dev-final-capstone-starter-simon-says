@@ -112,6 +112,9 @@ function padHandler(event) {
   if (!color) return;
 
   // TODO: Write your code here.
+  let pad = pads.find((pad) => pad.color === color);
+  pad.sound.play();
+  checkPress(color);
   return color;
 }
 
@@ -142,20 +145,27 @@ function padHandler(event) {
  */
 function setLevel(level = 1) {
   // TODO: Write your code here.
-  let maxRoundCount = 8;
+  //let maxRoundCount = 8;
   const err = "Please enter level 1, 2, 3, or 4"
-  if (level == 1){
-    maxRoundCount = 8;
+  if (level == 1) {
+     maxRoundCount = 8;
+    return 8;
   } else if (level == 2) {
-    maxRoundCount = 14;
+     maxRoundCount = 14;
+    return 14;
   } else if (level == 3) {
-    maxRoundCount = 20;
+     maxRoundCount = 20;
+    return 20;
   } else if (level == 4) {
-    maxRoundCount = 31;
+     maxRoundCount = 31;
+    return 31;
   } else {
     //throw new Error("Please enter level 1, 2, 3, or 4")
-    document.getElementsByClassName(".js-heading").innerHTML = err;
+    return err;
+    //setText(statusSpan, err);
+    //document.getElementsByClassName(".js-heading").innerHTML = err;
   }
+  //return maxRoundCount;
 }
 
 /**
@@ -277,6 +287,8 @@ function activatePads(sequence) {
  */
 function playHumanTurn() {
   // TODO: Write your code here.
+  padContainer.classList.remove("unclickable");
+  setText(statusSpan, roundCount == 1 ? "1 press left!" : `${roundCount} presses left!`);
 }
 
 /**
@@ -303,6 +315,17 @@ function playHumanTurn() {
  */
 function checkPress(color) {
   // TODO: Write your code here.
+  playerSequence.push(color);
+  let index = playerSequence.length -1;
+  let remainingPresses = computerSequence.length - playerSequence.length;
+  setText(statusSpan, remainingPresses == 1 ? "1 press left!" : `${remainingPresses} presses left!`);
+  if (playerSequence[index] !== computerSequence[index]){
+    resetGame("OH NO! WRONG PAD :(");
+    return;
+  }
+  if (remainingPresses === 0) {
+    checkRound();
+  }
 }
 
 /**
@@ -322,6 +345,15 @@ function checkPress(color) {
 
 function checkRound() {
   // TODO: Write your code here.
+  if (playerSequence.length === maxRoundCount) {
+    resetGame("\\m\/   YOU WON!   \\m\/");
+    return;
+  } else {
+    roundCount++;
+    playerSequence = [];
+    setText(statusSpan, "Keep it up, brah!");
+    setTimeout(playComputerTurn, 1000);
+  }
 }
 
 /**
@@ -335,13 +367,15 @@ function checkRound() {
  */
 function resetGame(text) {
   // TODO: Write your code here.
-
-  // Uncomment the code below:
-  // alert(text);
-  // setText(heading, "Simon Says");
-  // startButton.classList.remove("hidden");
-  // statusSpan.classList.add("hidden");
-  // padContainer.classList.add("unclickable");
+computerSequence = [];
+playerSequence = [];
+roundCount = [];
+// Uncomment the code below:
+ alert(text);
+ setText(heading, "Simon Says : Metal");
+ startButton.classList.remove("hidden");
+ statusSpan.classList.add("hidden");
+ padContainer.classList.add("unclickable");
 }
 
 /**
