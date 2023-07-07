@@ -7,6 +7,12 @@
  const statusSpan = document.querySelector(".js-status"); // Use querySelector() to get the status element
  const heading = document.querySelector(".js-heading"); // Use querySelector() to get the heading element
  const padContainer = document.querySelector(".js-pad-container"); // Use querySelector() to get the heading element
+//  Query selectors for level buttons
+ const levelOne = document.querySelector(".js-level-one");
+ const levelTwo = document.querySelector(".js-level-two");
+ const levelThree = document.querySelector(".js-level-three");
+ const levelFour = document.querySelector(".js-level-four");
+ const levelHeader = document.querySelector(".js-level-header");
 
 /**
  * VARIABLES
@@ -62,10 +68,24 @@ let roundCount = 0; // track the number of rounds that have been played so far
 padContainer.addEventListener("click", padHandler);
 // TODO: Add an event listener `startButtonHandler()` to startButton.
 startButton.addEventListener("click", startButtonHandler);
+// Event listeners for level buttons
+levelOne.addEventListener("click", levelButtonHandler);
+levelTwo.addEventListener("click", levelButtonHandler);
+levelThree.addEventListener("click", levelButtonHandler);
+levelFour.addEventListener("click", levelButtonHandler);
 /**
  * EVENT HANDLERS
  */
-
+// Event handler to pass level to setLevel function
+function levelButtonHandler(event) {
+setLevel(level = event.target.value);
+levelOne.classList.add("hidden");
+levelTwo.classList.add("hidden");
+levelThree.classList.add("hidden");
+levelFour.classList.add("hidden");
+levelHeader.classList.add("hidden");
+startButton.classList.remove("hidden");
+}
 /**
  * Called when the start button is clicked.
  *
@@ -82,7 +102,8 @@ startButton.addEventListener("click", startButtonHandler);
  */
 function startButtonHandler() {
   // TODO: Write your code here.
-  setLevel();
+  // moveed setLevel() to levelButtonHandler
+  //setLevel();
   roundCount++;
   startButton.classList.add("hidden");
   statusSpan.classList.remove("hidden");
@@ -143,10 +164,9 @@ function padHandler(event) {
  * setLevel(8) //> returns "Please enter level 1, 2, 3, or 4";
  *
  */
-function setLevel(level = 1) {
+function setLevel(level) {
   // TODO: Write your code here.
-  //let maxRoundCount = 8;
-  const err = "Please enter level 1, 2, 3, or 4"
+
   if (level == 1) {
      maxRoundCount = 8;
     return 8;
@@ -160,9 +180,9 @@ function setLevel(level = 1) {
      maxRoundCount = 31;
     return 31;
   } else {
-    //throw new Error("Please enter level 1, 2, 3, or 4")
-    return err;
-    //setText(statusSpan, err);
+    const err = "Please enter level 1, 2, 3, or 4"
+    //throw new Error("Please enter level 1, 2, 3, or 4");
+    return setText(statusSpan, err);
     //document.getElementsByClassName(".js-heading").innerHTML = err;
   }
   //return maxRoundCount;
@@ -288,6 +308,7 @@ function activatePads(sequence) {
 function playHumanTurn() {
   // TODO: Write your code here.
   padContainer.classList.remove("unclickable");
+  // Used ternary operator to differentiate between singlar and plural
   setText(statusSpan, roundCount == 1 ? "1 press left!" : `${roundCount} presses left!`);
 }
 
@@ -318,6 +339,7 @@ function checkPress(color) {
   playerSequence.push(color);
   let index = playerSequence.length -1;
   let remainingPresses = computerSequence.length - playerSequence.length;
+  // Used ternary operator to differentiate between singlar and plural
   setText(statusSpan, remainingPresses == 1 ? "1 press left!" : `${remainingPresses} presses left!`);
   if (playerSequence[index] !== computerSequence[index]){
     resetGame("OH NO! WRONG PAD :(");
@@ -346,11 +368,13 @@ function checkPress(color) {
 function checkRound() {
   // TODO: Write your code here.
   if (playerSequence.length === maxRoundCount) {
-    resetGame("\\m\/   YOU WON!   \\m\/");
+    // fun message for winning metal horns emojis
+    resetGame("\\m\/   YOU TOTALLY WON!   \\m\/");
     return;
   } else {
     roundCount++;
     playerSequence = [];
+    // motivational message for correct button press
     setText(statusSpan, "Keep it up, brah!");
     setTimeout(playComputerTurn, 1000);
   }
@@ -372,9 +396,16 @@ playerSequence = [];
 roundCount = [];
 // Uncomment the code below:
  alert(text);
- setText(heading, "Simon Says : Metal");
- startButton.classList.remove("hidden");
+ setText(heading, "80's Simon Says");
+// removed so that it show level buttons at reset
+// startButton.classList.remove("hidden");
  statusSpan.classList.add("hidden");
+ levelOne.classList.remove("hidden");
+ levelTwo.classList.remove("hidden");
+ levelThree.classList.remove("hidden");
+ levelFour.classList.remove("hidden");
+ levelHeader.classList.remove("hidden")
+ startButton.classList.add("hidden");
  padContainer.classList.add("unclickable");
 }
 
